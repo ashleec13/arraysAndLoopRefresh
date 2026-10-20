@@ -12,7 +12,13 @@ function render (html) {
      - Output all foods into the #out div (as <p> tags or list items)
 */
 function listFoods () {
-  // code goes here
+  let html = ''
+
+  for (const food of foods) {
+    html += `<p>${food}</p>`
+  }
+
+  render(html)
 }
 
 /* 
@@ -21,7 +27,14 @@ function listFoods () {
      - Output foods as an ordered list (<ol><li>...</li></ol>)
 */
 function numberedFoods () {
-  // code goes here
+  let html = '<ol>'
+
+  for (let i = 0; i < foods.length; i++) {
+    html += `<li>${foods[i]}</li>`
+  }
+
+  html += '</ol>'
+  render(html)
 }
 
 /* 
@@ -32,7 +45,22 @@ function numberedFoods () {
      - If no matches, display a "not found" message
 */
 function filterFoods () {
-  // code goes here
+  const letter = prompt('Enter a letter to filter foods:')
+
+  if (letter === null) {
+    return
+  }
+
+  const searchLetter = letter.trim().toLowerCase()
+  let html = ''
+
+  for (const food of foods) {
+    if (food.toLowerCase().startsWith(searchLetter)) {
+      html += `<p>${food}</p>`
+    }
+  }
+
+  render(html || '<p>No foods found.</p>')
 }
 
 /* 
@@ -42,7 +70,14 @@ function filterFoods () {
      - Cards should be placed in a centered row
 */
 function forEachFoods () {
-  // code goes here
+  let html = '<div class="row justify-content-center g-3">'
+
+  foods.forEach(function (food) {
+    html += `<div class="col-12 col-sm-6 col-md-4"><div class="card h-100"><div class="card-body text-center">${food}</div></div></div>`
+  })
+
+  html += '</div>'
+  render(html)
 }
 
 // ---- Event listeners (buttons) ----
@@ -60,7 +95,16 @@ document.getElementById('btnForEach').addEventListener('click', forEachFoods)
   - Display the results as an unordered list (<ul>)
 */
 function uppercaseList () {
-  // TODO: Write your code here
+  const uppercaseFoods = foods.map(function (food) {
+    return food.toUpperCase()
+  })
+
+  let html = '<ul>'
+  uppercaseFoods.forEach(function (food) {
+    html += `<li>${food}</li>`
+  })
+  html += '</ul>'
+  render(html)
 }
 
 /* 
@@ -70,7 +114,14 @@ function uppercaseList () {
   - You may use a backwards loop OR the built-in .reverse()
 */
 function reverseList () {
-  // TODO: Write your code here
+  let html = '<ul>'
+
+  for (let i = foods.length - 1; i >= 0; i--) {
+    html += `<li>${foods[i]}</li>`
+  }
+
+  html += '</ul>'
+  render(html)
 }
 
 /* 
@@ -80,7 +131,9 @@ function reverseList () {
   - Display it in a Bootstrap card with a heading like "Today's Pick"
 */
 function randomFoodPicker () {
-  // TODO: Write your code here
+  const randomIndex = Math.floor(Math.random() * foods.length)
+  const pickedFood = foods[randomIndex]
+  render(`<div class="card mx-auto" style="max-width: 24rem;"><div class="card-body text-center"><h2 class="h5 card-title">Today's Pick</h2><p class="card-text">${pickedFood}</p></div></div>`)
 }
 
 /* 
@@ -91,7 +144,14 @@ function randomFoodPicker () {
   - Display results in the format: Food — X letters
 */
 function wordLengths () {
-  // TODO: Write your code here
+  let html = '<ul>'
+
+  for (const food of foods) {
+    html += `<li>${food} — ${food.length} letters</li>`
+  }
+
+  html += '</ul>'
+  render(html)
 }
 
 // ---- Event listeners for the new buttons ----
